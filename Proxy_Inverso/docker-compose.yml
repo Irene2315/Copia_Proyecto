@@ -16,6 +16,7 @@ services:
     restart: always
     volumes:
       - ./Frontend/index.html:/usr/local/apache2/htdocs/index.html
+      - ./Frontend/Recursos:/usr/local/apache2/htdocs/recursos
     ports:
       - "8080:80"
     depends_on:
@@ -50,7 +51,7 @@ services:
     image: irene2315/dependencias-laravel:tag
     restart: always
     volumes:
-      - ./Backed/laravel_API:/var/www/html
+      - ./Backend/laravel_API:/var/www/html
     ports:
       - "8083:8000"
     depends_on:
@@ -67,6 +68,7 @@ services:
       PMA_HOST: mysql
     depends_on:
       - mysql
+
 
 
   
