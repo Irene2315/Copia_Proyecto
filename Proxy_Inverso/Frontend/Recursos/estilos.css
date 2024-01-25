@@ -4,6 +4,7 @@
   text-align: center;
   color: white;
 }
+
 @font-face {
   font-family: Climate_Crisis;
   src: url(/recursos/Fuentes/Climate_Crisis/ClimateCrisis-Regular-VariableFont_YEAR.ttf);
@@ -28,7 +29,8 @@
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 
 }
-#logout{
+
+#logout {
   border: 3px solid white;
 }
 
@@ -61,22 +63,22 @@ h1 {
 
 }
 
-#mapid{
+#mapid {
   margin-top: 1%;
   margin-left: 25%;
   width: 600px;
   height: 400px;
 }
 
-#lugaresT{
+#lugaresT {
   border-collapse: collapse;
   width: 20%;
   left: 58%;
-  top:30%;
+  top: 30%;
   position: absolute;
   background-color: black;
-  
-  
+
+
 }
 
 th,
@@ -86,17 +88,20 @@ td {
   padding: 8px;
   text-align: center;
 }
-.ContenedorItems{
+
+.ContenedorItems {
   margin-top: 1%;
 }
-h3{
+
+h3 {
   margin-top: 10px;
   margin-left: 5%;
   font-family: Russo_One;
-  
+
 }
 
-#items_Desactivados, #items_Activados{
+#items_Desactivados,
+#items_Activados {
   width: 600px;
   height: 150px;
   margin-left: 35%;
@@ -105,17 +110,17 @@ h3{
 }
 
 
-#items_Desactivados{
-  
+#items_Desactivados {
+
   border-color: rgb(254, 8, 8);
 }
 
-#items_Activados{
- 
+#items_Activados {
+
   border-color: rgb(11, 11, 153);
 }
 
-#item_Temp{
+#item_Temp {
   width: 117px;
   height: 109px;
   border-radius: 25%;
@@ -127,7 +132,7 @@ h3{
   margin: 10px;
 }
 
-#item_Humedad{
+#item_Humedad {
   width: 117px;
   height: 109px;
   border-radius: 25%;
@@ -139,7 +144,7 @@ h3{
   margin: 10px;
 }
 
-#item_Viento{
+#item_Viento {
   width: 117px;
   height: 109px;
   border-radius: 25%;
@@ -151,7 +156,7 @@ h3{
   margin: 10px;
 }
 
-#item_Prevision{
+#item_Prevision {
   width: 117px;
   height: 109px;
   border-radius: 25%;
@@ -161,6 +166,15 @@ h3{
   display: inline-block;
   background-size: 800px 800px;
   margin: 10px;
+}
+
+#enviar_Datos {
+  margin-top: 5%;
+  margin-left: 5%;
+  font-family: Suez_One;
+  width: 300px;
+  height: 100px;
+  font-size: 20px;
 }
 
 footer {

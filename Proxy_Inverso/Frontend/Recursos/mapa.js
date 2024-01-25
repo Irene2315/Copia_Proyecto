@@ -1,4 +1,6 @@
 let ciudad = "";
+var lugaresSeleccionados = [];
+var lugaresSeleccionadosUnicos = new Set(lugaresSeleccionados);
 
 function mapaTodos() {
     var map = L.map('mapid').setView([43.2690, -2.1799], 9.4);
@@ -12,6 +14,7 @@ function mapaTodos() {
             Authorization: 'Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJtZXQwMS5hcGlrZXkiLCJpc3MiOiJJRVMgUExBSUFVTkRJIEJISSBJUlVOIiwiZXhwIjoyMjM4MTMxMDAyLCJ2ZXJzaW9uIjoiMS4wLjAiLCJpYXQiOjE2Mzk3NDc5MDcsImVtYWlsIjoiaWtjZXhAcGxhaWF1bmRpLm5ldCJ9.NEd10ft7DTb8HCohv5WId_rRKtgQj-Pc5dLNdCsmSTgypZxyGSkNJIuPulVAOvcZrfs9sXMjus-06iDa6kZlOnMGQeY0LsajlWakvGGXmDN3FKSfJT-9BCDtMyh89P34Jt3uneIt7H0we82G4_URRfUwIGQg83FCT_zO6Pu2joqBRURMC80Hs_x4voWpmGCwg6LPcb4sO0bGNqJq36zp1WB0LHPjBQ6pd3_mjiXsE6h892841vwcdyElpX2gCKV9JEH6Xm1LBVbcTakWUO_jGjAGhO4SdBOXuqNcmKDOJbsURVMlNc-_2kYvYlxPa9xj9B9PrXwNq7tNDlDq6ooKYA'
         }
     };
+
 
     fetch('http://localhost:8083/api/conseguirLugares', options)
         .then(response => response.json())
@@ -32,7 +35,7 @@ function mapaTodos() {
                 });
             });
 
-            console.log(lugares);
+            //console.log(lugares);
             let listaSeleccion = ''
             listaSeleccion += '<table id="lugaresT"><tr><td>Ciudades Seleccionadas</td></tr>';
 
@@ -46,15 +49,26 @@ function mapaTodos() {
                     var lugarFila = document.getElementById(lugar.id);
                     if (lugar.activo == false) {
                         $(marker._icon).css("filter", "hue-rotate(150deg)");
+
+                        lugaresSeleccionadosUnicos.add(lugar.id);
+
+                        console.log(lugaresSeleccionadosUnicos);
+
+
                         if (!lugarFila) {
                             document.getElementById("lugaresT").innerHTML += `<tr><td id="${lugar.id}">${lugar.nombre}</td></tr>`;
                         }
                         lugar.activo = true;
-                        console.log(lugar);
+                        //console.log(lugar);
                     } else {
-                        if(lugarFila){
+                        if (lugarFila) {
                             lugarFila.remove();
                         }
+
+                        lugaresSeleccionadosUnicos.delete(lugar.id);
+
+                        console.log(lugaresSeleccionadosUnicos);
+
                         $(marker._icon).css("filter", "hue-rotate(0deg)");
                         lugar.activo = false;
                         console.log(lugar);
@@ -64,8 +78,14 @@ function mapaTodos() {
 
             listaSeleccion += '</table>';
             document.getElementById("listaLugares").innerHTML = listaSeleccion;
+
+            
         })
         .catch(err => console.error(err));
 }
 
 mapaTodos();
+async function guardadoMeteo() {
+    localStorage.setItem('lugaresSeleccion', JSON.stringify(lugaresSeleccionadosUnicos));
+    console.log("Peticiones_Enviadas")
+}

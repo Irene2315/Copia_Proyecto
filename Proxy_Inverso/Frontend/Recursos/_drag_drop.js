@@ -1,10 +1,7 @@
-$(document).ready(function () {
+var elementosActivados = [];
+var elementosActivadosUnicos = new Set(elementosActivados);
 
-    // De forma predeterminada todos los elementos son dragables
-    let objeto = null;
-    var elementosActivados = [];
-    var arraySinDuplicados = new Set(elementosActivados);
-    
+$(document).ready(function () {
 
     $("#items_Activados,#items_Desactivados").css("background-color", "white");
     $('#items_Desactivados').append(item_Viento, item_Prevision);
@@ -13,22 +10,22 @@ $(document).ready(function () {
 
     $("#items_Activados").children().each(function () {
         var idElemento = $(this).attr('id');
-        arraySinDuplicados.add(idElemento);
+        elementosActivadosUnicos.add(idElemento);
     });
-    console.log(arraySinDuplicados);
+    console.log(elementosActivadosUnicos);
 
 
     $("#item_Temp,#item_Humedad,#item_Viento,#item_Prevision, body").on('dragstart', function (event) {
 
         // Recoge el id del elemento que estoy moviendo
         event.originalEvent.dataTransfer.setData("text/plain", event.target.id);
-        console.log(event.target.id);
+        //console.log(event.target.id);
         objeto = event.target.id;
     });
 
     // Permitir que el destino reciba elementos arrastrados
     $("#items_Desactivados").on('dragover', function (event) {
-        console.log(event.target.id);
+        //console.log(event.target.id);
 
         $("#items_Desactivados").css("background-color", "rgb(254, 8, 8)");
         event.preventDefault();
@@ -37,7 +34,7 @@ $(document).ready(function () {
     });
     $("#items_Activados").on('dragover', function (event) {
 
-        console.log(event.target.id);
+        //console.log(event.target.id);
 
         $("#items_Activados").css("background-color", "rgb(11, 11, 153)");
         event.preventDefault();
@@ -67,17 +64,21 @@ $(document).ready(function () {
             // Actualizar el conjunto de IDs sin duplicados
             $("#items_Activados").children().each(function () {
                 var idElemento = $(this).attr('id');
-                arraySinDuplicados.add(idElemento);
+                elementosActivadosUnicos.add(idElemento);
             });
             $("#items_Desactivados").children().each(function () {
                 var idElemento = $(this).attr('id');
-                arraySinDuplicados.delete(idElemento);
+                elementosActivadosUnicos.delete(idElemento);
             });
 
-            console.log(arraySinDuplicados);
+            console.log(elementosActivadosUnicos);
         }
     });
 
-
+    
 
 });
+async function guardadoMeteo() {
+    localStorage.setItem('itemsMeteoActivados', JSON.stringify(elementosActivadosUnicos));
+    console.log("Peticiones_Enviadas_Items")
+}

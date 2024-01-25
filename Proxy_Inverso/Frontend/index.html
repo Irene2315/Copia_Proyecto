@@ -53,33 +53,40 @@
             </div>
         </div>
     </nav>
-    <div class="entrada">
+    <div>
+        <form id="DatosMeteo" class="form" onsubmit="event.preventDefault();guardadoMeteo()">
+            <h1>FORMULARIO DE DATOS METEOROLÓGICOS</h1>
+            <h2 class="subtitulos">SELECCIONA LAS LOCALIDADES QUE QUIERES VER</h2>
+            <div id="mapid"></div>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"> </script>
+            <script src="/recursos/mapa.js"></script>
 
-        <h1>FORMULARIO DE DATOS METEOROLÓGICOS</h1>
-        <h2 class="subtitulos">SELECCIONA LAS LOCALIDADES QUE QUIERES VER</h2>
-        <div id="mapid"></div>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"> </script>
-        <script src="/recursos/mapa.js"></script>
+            <div id="listaLugares"></div>
+            <div id="item_Temp" draggable="true"></div>
+            <div id="item_Humedad" draggable="true"></div>
+            <div id="item_Viento" draggable="true"></div>
+            <div id="item_Prevision" draggable="true"></div>
+            <h2 class="subtitulos">SELECCIONA LOS ITEMS METEOROLÓGICOS QUE QUIERES VER</h2>
+            <div class="ContenedorItems">
+                <h3>DESACTIVADOS</h3>
+                <div id="items_Desactivados"></div>
+            </div>
+            <div class="ContenedorItems">
+                <h3>ACTIVADOS</h3>
+                <div id="items_Activados"></div>
+            </div>
+            <script src="/recursos/_drag_drop.js"></script>
 
-        <div id="listaLugares"></div>
-        <div id="item_Temp" draggable="true"></div>
-        <div id="item_Humedad" draggable="true"></div>
-        <div id="item_Viento" draggable="true"></div>
-        <div id="item_Prevision" draggable="true"></div>
-        <h2 class="subtitulos">SELECCIONA LOS ITEMS METEOROLÓGICOS QUE QUIERES VER</h2>
-        <div class="ContenedorItems">
-            <h3>DESACTIVADOS</h3>
-            <div id="items_Desactivados"></div>
-        </div>
-        <div class="ContenedorItems">
-            <h3>ACTIVADOS</h3>
-            <div id="items_Activados"></div>
-        </div>
+            <input id="enviar_Datos" class="ui-button ui-widget ui-corner-all" type="submit"
+                value="Enviar Preferencias">
+
+        </form>
+
+
 
     </div>
 
 
-    <script src="/recursos/_drag_drop.js"></script>
 
 
     </div>
