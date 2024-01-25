@@ -4,9 +4,23 @@
   text-align: center;
   color: white;
 }
+@font-face {
+  font-family: Climate_Crisis;
+  src: url(/recursos/Fuentes/Climate_Crisis/ClimateCrisis-Regular-VariableFont_YEAR.ttf);
+}
 
-body {
-  background: linear-gradient(to right, #42086f, #8d8580);
+@font-face {
+  font-family: Russo_One;
+  src: url(/recursos/Fuentes/Russo_One/RussoOne-Regular.ttf);
+}
+
+@font-face {
+  font-family: Suez_One;
+  src: url(/recursos/Fuentes/Suez_One/SuezOne-Regular.ttf);
+}
+
+#FormularioPortada {
+  background: linear-gradient(to right, #082f6f, #8d8580);
   background-repeat: no-repeat;
   background-size: cover;
   align-items: center;
@@ -14,217 +28,142 @@ body {
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 
 }
-
-@font-face{
-  font-family:Climate_Crisis;
-  src:url(/recursos/Fuentes/Climate_Crisis/ClimateCrisis-Regular-VariableFont_YEAR.ttf);
-  }
-h1{
-  margin-top: 1%;
-  font-family:Climate_Crisis;
+#logout{
+  border: 3px solid white;
 }
 
+
+
+h1 {
+  margin-top: 1%;
+  font-family: Climate_Crisis;
+}
+
+
+
 #imagePortada {
-  margin-left: 90%;
+
   margin-top: 10px;
   width: 100px;
   height: 90px;
 }
 
-#log{
-  position: absolute;
-  right: 0;
-  top: 0;
-  z-index: 1;
-}
-#tabs{
-  width: 390px;
-  float: right;
+.subtitulos {
+  display: inline-block;
+  margin-top: 1%;
+  color: black;
+  background-color: rgba(255, 255, 255, 0.662);
+  width: 60%;
+
+  font-family: Suez_One;
+
+  border-radius: 10px;
 
 }
 
-#tabs-0{
-  display: none !important;
-  visibility: hidden !important;
-  padding:  0 !important;
-  margin:  0 !important;
-}
-
-.form {
-  
-  flex-direction: column;
-  gap: 10px;
-  width: 300px;
+#mapid{
+  margin-top: 1%;
+  margin-left: 25%;
+  width: 600px;
   height: 400px;
-  
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 20px;
- 
 }
 
-
-.title {
-  font-size: 28px;
-  color: royalblue;
-  font-weight: 600;
-  letter-spacing: -1px;
-  position: relative;
-  display: flex;
-  align-items: center;
-  padding-left: 30px;
-}
-
-.title::before,.title::after {
+#lugaresT{
+  border-collapse: collapse;
+  width: 20%;
+  left: 58%;
+  top:30%;
   position: absolute;
-  content: "";
-  height: 16px;
-  width: 16px;
-  border-radius: 50%;
-  left: 0px;
-  background-color: royalblue;
+  background-color: black;
+  
+  
 }
 
-.title::before {
-  width: 18px;
-  height: 18px;
-  background-color: royalblue;
-}
+th,
+td {
 
-.title::after {
-  width: 18px;
-  height: 18px;
-  animation: pulse 1s linear infinite;
-}
-
-.message, .signin {
-  color: rgba(88, 87, 87, 0.822);
-  font-size: 14px;
-}
-
-.signin {
+  border: 1px solid white;
+  padding: 8px;
   text-align: center;
 }
-
-.signin a {
-  color: royalblue;
+.ContenedorItems{
+  margin-top: 1%;
 }
-
-.signin a:hover {
-  text-decoration: underline royalblue;
-}
-
-.flex {
-  display: flex;
-  width: 100%;
-  gap: 6px;
-}
-
-label{
-  margin-left: 10px;
+h3{
   margin-top: 10px;
-  
-}
-.form label {
-  position: relative;
-}
-input{
-  color: black;
-  max-width: 400px;
-  float: left;
-  clear: both;
-}
-.form label .input {
-  
-  width: 100%;
-  padding: 10px 10px 20px 10px;
-  outline: 0;
-  border: 1px solid rgba(105, 105, 105, 0.397);
-  border-radius: 10px;
-}
-
-.form label .input + span {
-  position: absolute;
-  left: 10px;
-  top: 30px;
-  color: grey;
-  font-size: 0.9em;
-  cursor: text;
-  transition: 0.3s ease;
-}
-
-.form label .input:placeholder-shown + span {
-  top: 15px;
-  font-size: 0.9em;
-}
-
-.form label .input:focus + span,.form label .input:valid + span {
-  top: 40px;
-  font-size: 0.7em;
-  font-weight: 600;
-}
-
-
-
-.enviar{
-  clear: both;
   margin-left: 5%;
-  margin-top: 10px;
-  float: left;
-  border: none;
-  outline: none;
-  background-color: royalblue;
-  padding: 10px;
-  border-radius: 10px;
-  color: #fff;
-  font-size: 16px;
-  transform: .3s ease;
+  font-family: Russo_One;
+  
 }
 
-.enviar:hover {
-  background-color: rgb(21, 59, 174);
-}
-
-@keyframes pulse {
-  from {
-    transform: scale(0.9);
-    opacity: 1;
-  }
-
-  to {
-    transform: scale(1.8);
-    opacity: 0;
-  }
-}
-.entrada{
-  margin-top: 1%;
-}
-.entrada img{
-  width: 200px;
-  height: 200px;
-}
-.carousel-item {
-  margin-left: 10%;
-  width: 80%;
-}
-
-.carousel-item img {
-  margin-top: 1%;
-  height: 800px;
+#items_Desactivados, #items_Activados{
+  width: 600px;
+  height: 150px;
+  margin-left: 35%;
   border: 1px solid black;
-  border-radius: 1%;
+  border-radius: 10px;
 }
 
-article{
-  background-color: rgba(0, 0, 0, 0.459);
-  color: white;
-  align-items: center;
-  width: 80%;
-  height: 100px;
-  margin-left: 10%;
+
+#items_Desactivados{
+  
+  border-color: rgb(254, 8, 8);
 }
 
-footer{
+#items_Activados{
+ 
+  border-color: rgb(11, 11, 153);
+}
+
+#item_Temp{
+  width: 117px;
+  height: 109px;
+  border-radius: 25%;
+  background-position: -682.5px -510px;
+  background-image: url(/recursos/Fotos/Logos_Tiempo.png);
+  background-repeat: no-repeat;
+  display: inline-block;
+  background-size: 800px 800px;
+  margin: 10px;
+}
+
+#item_Humedad{
+  width: 117px;
+  height: 109px;
+  border-radius: 25%;
+  background-position: -546px -510px;
+  background-image: url(/recursos/Fotos/Logos_Tiempo.png);
+  background-repeat: no-repeat;
+  display: inline-block;
+  background-size: 800px 800px;
+  margin: 10px;
+}
+
+#item_Viento{
+  width: 117px;
+  height: 109px;
+  border-radius: 25%;
+  background-position: -272.8px -127.5px;
+  background-image: url(/recursos/Fotos/Logos_Tiempo.png);
+  background-repeat: no-repeat;
+  display: inline-block;
+  background-size: 800px 800px;
+  margin: 10px;
+}
+
+#item_Prevision{
+  width: 117px;
+  height: 109px;
+  border-radius: 25%;
+  background-position: -409px -2px;
+  background-image: url(/recursos/Fotos/Logos_Tiempo.png);
+  background-repeat: no-repeat;
+  display: inline-block;
+  background-size: 800px 800px;
+  margin: 10px;
+}
+
+footer {
   margin-top: 1%;
   background: black;
   width: 100%;

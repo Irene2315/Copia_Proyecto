@@ -42,6 +42,7 @@ services:
       - ./Backend/laravel_recolectarDatos/:/var/www/html
     ports:
       - "8082:8000"
+    command: ["php", "artisan", "schedule:work","--verbose"]
     depends_on:
       - mysql
     environment:
