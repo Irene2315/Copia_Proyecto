@@ -2,6 +2,9 @@ let ciudad = "";
 var lugaresSeleccionados = [];
 var lugaresSeleccionadosUnicos = new Set(lugaresSeleccionados);
 
+
+
+
 function mapaTodos() {
     var map = L.map('mapid').setView([43.2690, -2.1799], 9.4);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -20,7 +23,7 @@ function mapaTodos() {
         .then(response => response.json())
         .then(data => {
             data = Object.values(data);
-            console.log(data);
+            //console.log(data);
 
             var lugares = [];
 
@@ -68,24 +71,34 @@ function mapaTodos() {
                         lugaresSeleccionadosUnicos.delete(lugar.id);
 
                         console.log(lugaresSeleccionadosUnicos);
+                        
 
                         $(marker._icon).css("filter", "hue-rotate(0deg)");
                         lugar.activo = false;
-                        console.log(lugar);
+                        //console.log(lugar);
                     }
+
+                    
+                    
+
                 });
             });
 
             listaSeleccion += '</table>';
             document.getElementById("listaLugares").innerHTML = listaSeleccion;
 
+            return (lugaresSeleccionadosUnicos);
             
         })
         .catch(err => console.error(err));
 }
 
-mapaTodos();
-async function guardadoMeteo() {
-    localStorage.setItem('lugaresSeleccion', JSON.stringify(lugaresSeleccionadosUnicos));
-    console.log("Peticiones_Enviadas")
+let lugaresUsuarios= mapaTodos();
+
+
+function guardadoLugares(){
+    console.log("Hola funcion");
+    console.log(JSON.stringify(Array.from(lugaresSeleccionadosUnicos)));
+    localStorage.setItem('lugaresSeleccion', JSON.stringify(Array.from(lugaresSeleccionadosUnicos)));
+    console.log("Peticiones_Enviadas_Lugares");
 }

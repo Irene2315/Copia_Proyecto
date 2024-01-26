@@ -1,21 +1,28 @@
+var valorTemp = document.getElementById("valorTemp");
+var valorHumedad = document.getElementById("valorHumedad");
+var valorViento = document.getElementById("valorViento");
+var prevision = document.getElementById("prevision");
+
 var elementosActivados = [];
 var elementosActivadosUnicos = new Set(elementosActivados);
 
-$(document).ready(function () {
+
+
+$(document).ready(function dragDrop() {
 
     $("#items_Activados,#items_Desactivados").css("background-color", "white");
-    $('#items_Desactivados').append(item_Viento, item_Prevision);
-    $('#items_Activados').append(item_Temp, item_Humedad);
+    $('#items_Desactivados').append(valorViento, prevision);
+    $('#items_Activados').append(valorTemp, valorHumedad);
 
 
     $("#items_Activados").children().each(function () {
         var idElemento = $(this).attr('id');
         elementosActivadosUnicos.add(idElemento);
     });
-    console.log(elementosActivadosUnicos);
+    //console.log(elementosActivadosUnicos);
 
 
-    $("#item_Temp,#item_Humedad,#item_Viento,#item_Prevision, body").on('dragstart', function (event) {
+    $("#valorTemp,#valorHumedad,#valorViento,#prevision, body").on('dragstart', function (event) {
 
         // Recoge el id del elemento que estoy moviendo
         event.originalEvent.dataTransfer.setData("text/plain", event.target.id);
@@ -71,14 +78,20 @@ $(document).ready(function () {
                 elementosActivadosUnicos.delete(idElemento);
             });
 
+
             console.log(elementosActivadosUnicos);
+            return (elementosActivadosUnicos);
         }
     });
 
-    
+
 
 });
-async function guardadoMeteo() {
-    localStorage.setItem('itemsMeteoActivados', JSON.stringify(elementosActivadosUnicos));
-    console.log("Peticiones_Enviadas_Items")
+
+
+
+function guardadoMeteo() {
+    console.log(JSON.stringify(Array.from(elementosActivadosUnicos)));
+    localStorage.setItem('guardadoItems', JSON.stringify(Array.from(elementosActivadosUnicos)));
+    console.log("Peticiones_Enviadas_Items");
 }

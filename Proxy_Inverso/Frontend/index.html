@@ -12,7 +12,6 @@
     <script src="/recursos/jquery-ui-1.13.2.custom/external/jquery/jquery.js"></script>
     <script src="/recursos/jquery-ui-1.13.2.custom/jquery-ui.min.js"></script>
     <link rel="stylesheet" type="text/css" href="/recursos/estilos.css">
-    <script src="/recursos/peticiones.js"></script>
 
 
     <script>
@@ -25,47 +24,41 @@
     </script>
 </head>
 
-<body id="FormularioPortada">
+<body id="BodyLoginForm">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-
-
-                </ul>
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0"></ul>
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <img src="/recursos/Fotos/Logo.PNG" id="imagePortada">
-
                 </ul>
                 <form id="log" class="d-flex">
                     <div class="widget">
-
                         <input id="logout" class="ui-button ui-widget ui-corner-all" type="submit"
                             value="Cerrar_Sesion">
-
+                    </div>
                 </form>
             </div>
         </div>
     </nav>
+    <!--Div principal que contendrá el formulario de logueo-->
     <div>
-        <form id="DatosMeteo" class="form" onsubmit="event.preventDefault();guardadoMeteo()">
+        <form id="DatosMeteo" class="form">
             <h1>FORMULARIO DE DATOS METEOROLÓGICOS</h1>
             <h2 class="subtitulos">SELECCIONA LAS LOCALIDADES QUE QUIERES VER</h2>
             <div id="mapid"></div>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"> </script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
             <script src="/recursos/mapa.js"></script>
-
             <div id="listaLugares"></div>
-            <div id="item_Temp" draggable="true"></div>
-            <div id="item_Humedad" draggable="true"></div>
-            <div id="item_Viento" draggable="true"></div>
-            <div id="item_Prevision" draggable="true"></div>
+            <div id="valorTemp" draggable="true"></div>
+            <div id="valorHumedad" draggable="true"></div>
+            <div id="valorViento" draggable="true"></div>
+            <div id="prevision" draggable="true"></div>
             <h2 class="subtitulos">SELECCIONA LOS ITEMS METEOROLÓGICOS QUE QUIERES VER</h2>
             <div class="ContenedorItems">
                 <h3>DESACTIVADOS</h3>
@@ -77,22 +70,37 @@
             </div>
             <script src="/recursos/_drag_drop.js"></script>
 
-            <input id="enviar_Datos" class="ui-button ui-widget ui-corner-all" type="submit"
-                value="Enviar Preferencias">
-
+            <button onclick="guardarPreferencias()" id="enviar_Datos" class="ui-button ui-widget ui-corner-all"
+                type="submit" value="Enviar Preferencias">Guardar Preferencias</button>
         </form>
-
-
-
     </div>
-
-
-
-
+    <!--Div Secundario que contedrá los resultados al rellenar el formulario-->
+    <div>
+        <div id="bodyLoginResultados">
+            <h1>DATOS Y PREVISIONES DE LUGARES SELECCIONADOS</h1>
+            <script src="/recursos/construirRespuesta.js"></script>
+            <div id="contenedorCards"></div>
+            <!--<div class="container">
+                <div class="row">
+                    <div class="col-lg-3 col-md-6 col-sm-12">
+                        <div class="card">
+                            
+                            <div class="card-body">
+                                <h5 class="card-title colorLetra">Tortilla De Patata</h5>
+                                <img src="Fotos/1-Tortilla.png" class="card-img-top" alt="...">
+                                <p class="card-text colorLetra">Plato típico español conpuesto de patatas y huevo batido.</p>
+                                <button type="button" class="btn btn-secondary">Ver Receta</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>-->
+            
+        </div>
     </div>
 
     <footer></footer>
-
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.2/dist/umd/popper.min.js"
         integrity="sha384-q9CRHqZndzlxGLOj+xrdLDJa9ittGte1NksRmgJKeCV9DrM7Kz868XYqsKWPpAmn"
@@ -103,6 +111,38 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
+
 </body>
+
+
+
+<script>
+    $("#bodyLoginResultados").css("display", "none");
+
+    function guardarPreferencias() {
+
+        console.log("He entrado");
+        // Aquí puedes agregar lógica adicional antes de llamar a las funciones de guardado
+        if (typeof guardadoLugares === 'function') {
+            guardadoLugares();
+        } else {
+            console.error("La función de guardadoLugares no está definida.");
+        }
+
+        if (typeof guardadoMeteo === 'function') {
+            guardadoMeteo();
+        } else {
+            console.error("La función de guardadoMeteo no está definida.");
+        }
+
+        construirCards();
+
+        $("#DatosMeteo").css("display", "none");
+
+        
+
+        $("#bodyLoginResultados").css("display", "block");
+    }
+</script>
 
 </html>

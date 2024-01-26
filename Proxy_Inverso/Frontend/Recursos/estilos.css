@@ -20,7 +20,7 @@
   src: url(/recursos/Fuentes/Suez_One/SuezOne-Regular.ttf);
 }
 
-#FormularioPortada {
+#BodyLoginForm {
   background: linear-gradient(to right, #082f6f, #8d8580);
   background-repeat: no-repeat;
   background-size: cover;
@@ -120,7 +120,7 @@ h3 {
   border-color: rgb(11, 11, 153);
 }
 
-#item_Temp {
+#valorTemp {
   width: 117px;
   height: 109px;
   border-radius: 25%;
@@ -132,7 +132,7 @@ h3 {
   margin: 10px;
 }
 
-#item_Humedad {
+#valorHumedad {
   width: 117px;
   height: 109px;
   border-radius: 25%;
@@ -144,7 +144,7 @@ h3 {
   margin: 10px;
 }
 
-#item_Viento {
+#valorViento {
   width: 117px;
   height: 109px;
   border-radius: 25%;
@@ -156,7 +156,7 @@ h3 {
   margin: 10px;
 }
 
-#item_Prevision {
+#prevision{
   width: 117px;
   height: 109px;
   border-radius: 25%;
@@ -177,9 +177,28 @@ h3 {
   font-size: 20px;
 }
 
+.card{
+  height: 90%;
+  border-radius: 10%;
+  margin-bottom: 10%;
+  
+}
+.colorLetra{
+  color: black;
+}
+.card img{
+  margin: 10%;
+  width: 80%;
+  height: 200px;
+  border-radius: 10%;
+}
+
+
 footer {
   margin-top: 1%;
   background: black;
   width: 100%;
   height: 200px;
 }
+
+
