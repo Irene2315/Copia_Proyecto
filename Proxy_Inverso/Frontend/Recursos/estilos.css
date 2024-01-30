@@ -181,10 +181,12 @@ h3 {
   height: 90%;
   border-radius: 10%;
   margin-bottom: 10%;
+  background-color: black;
+  
   
 }
 .colorLetra{
-  color: black;
+  color: white;
 }
 .card img{
   margin: 10%;
