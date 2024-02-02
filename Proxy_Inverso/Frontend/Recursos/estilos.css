@@ -178,21 +178,159 @@ h3 {
 }
 
 .card{
-  height: 90%;
-  border-radius: 10%;
-  margin-bottom: 10%;
-  background-color: black;
+  background-color: transparent;
+  width: 200px;
+  height: 350px;
+  perspective: 1000px;
+  margin: 10px;
+  
   
   
 }
 .colorLetra{
-  color: white;
+  font-family: Suez_One;
+  font-size: 1.5em;
+  font-weight: 900;
+  margin: 0;
 }
-.card img{
+
+
+
+.card-body {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+  cursor: pointer;
+}
+
+.imgFront{
   margin: 10%;
   width: 80%;
   height: 200px;
-  border-radius: 10%;
+  
+}
+.caraLateral {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.mediciones-container {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+
+.card-texto {
+  margin-bottom: 10px; 
+  margin-left: 10px;
+  
+}
+
+.imgLat {
+  float: left;
+  width: 100px;
+}
+
+.card:hover .card-body {
+  transform: rotateY(180deg);
+}
+
+.caraFrontal,
+.caraLateral{
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: 1rem;
+  color: white;
+  box-shadow: 0 0 0.3em rgba(255, 255, 255, 0.5);
+  font-weight: 700;
+}
+
+#selecionLugar{
+ margin-left: 10%; 
+}
+
+.caraFrontal,
+.caraFrontal::before {
+  background-color: black;
+}
+
+.caraLateral,
+.caraLateral::before {
+  background-color: #8d8580;
+}
+
+.caraLateral {
+  transform: rotateY(180deg);
+}
+
+.caraFrontal::before,
+.caraLateral::before {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  content: '';
+  width: 110%;
+  height: 110%;
+  position: absolute;
+  z-index: -1;
+  border-radius: 1em;
+  filter: blur(20px);
+  animation: animate 5s linear infinite;
+}
+
+@keyframes animate {
+  0% {
+    opacity: 0.3;
+  }
+
+  80% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0.3;
+  }
+}
+
+.custom-tooltip {
+  font-size: 30px; 
+  max-width: 300px; 
+}
+
+#calendario input{
+  
+  background-color: black;
+  
+}
+
+#calendario{
+  margin-top: 1%;
+  margin-bottom: 100px;
+}
+#calendario label{
+  margin-left: 5%;
+}
+
+#grafico{
+  background-color: white;
+  width:50%;
+  height: 20%;
+  max-width:600px;
+  margin-left: 35%;
 }
 
 
@@ -202,5 +340,3 @@ footer {
   width: 100%;
   height: 200px;
 }
-
-

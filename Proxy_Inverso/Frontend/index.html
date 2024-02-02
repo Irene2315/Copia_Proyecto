@@ -6,11 +6,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="/recursos/jquery-ui-1.13.2.custom/jquery-ui.min.css">
     <script src="/recursos/jquery-ui-1.13.2.custom/external/jquery/jquery.js"></script>
     <script src="/recursos/jquery-ui-1.13.2.custom/jquery-ui.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <script src="/recursos/i18n/jquery.ui.datepicker-es.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+    
+
+
     <link rel="stylesheet" type="text/css" href="/recursos/estilos.css">
 
 
@@ -22,27 +31,34 @@
             });
         });
     </script>
+
+    <script>
+        $(function () {
+            $('[data-tooltip="tooltip"]').tooltip();
+
+
+            $('[title]').tooltip();
+        });
+    </script>
+
+
 </head>
 
 <body id="BodyLoginForm">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0"></ul>
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <img src="/recursos/Fotos/Logo.PNG" id="imagePortada">
                 </ul>
-                <form id="log" class="d-flex">
+                <button id="log" class="d-flex" title="hola">
                     <div class="widget">
                         <input id="logout" class="ui-button ui-widget ui-corner-all" type="submit"
                             value="Cerrar_Sesion">
                     </div>
-                </form>
+                </button>
             </div>
         </div>
     </nav>
@@ -52,7 +68,6 @@
             <h1>FORMULARIO DE DATOS METEOROLÓGICOS</h1>
             <h2 class="subtitulos">SELECCIONA LAS LOCALIDADES QUE QUIERES VER</h2>
             <div id="mapid"></div>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
             <script src="/recursos/mapa.js"></script>
             <div id="listaLugares"></div>
             <div id="valorTemp" draggable="true"></div>
@@ -76,29 +91,35 @@
     </div>
     <!--Div Secundario que contedrá los resultados al rellenar el formulario-->
     <div>
+
         <div id="bodyLoginResultados">
-            <h1>DATOS Y PREVISIONES DE LUGARES SELECCIONADOS</h1>
             <script src="/recursos/construirRespuesta.js"></script>
-            
-            <div id="contenedorCards"></div>
-            
-            <!--<div class="container">
-                <div class="row">
-                    <div class="col-lg-3 col-md-6 col-sm-12">
-                        <div class="card">
-                            
-                            <div class="card-body">
-                                <h5 class="card-title colorLetra">Tortilla De Patata</h5>
-                                <img src="Fotos/1-Tortilla.png" class="card-img-top" alt="...">
-                                <p class="card-text colorLetra">Plato típico español conpuesto de patatas y huevo batido.</p>
-                                <button type="button" class="btn btn-secondary">Ver Receta</button>
-                            </div>
-                        </div>
-                    </div>
-                    
+            <h1>RESULTADOS DE TU FORMULARIO</h1>
+            <div id="resultadoGenerales">
+                <h2 class="subtitulos">DATOS Y PREVISIONES DE LUGARES SELECCIONADOS</h2>
+
+                <div id="contenedorCards"></div>
+            </div>
+
+            <div id="resultadoLugarConcreto">
+                <h2 class="subtitulos">ANALIZAR UN LUGAR CONCRETO</h2>
+                <div id="calendario">
+                    <label for="desde">Desde</label>
+                    <input type="text" id="desde" name="desde">
+                    <label for="hasta">Hasta</label>
+                    <input type="text" id="hasta" name="hasta">
                 </div>
-            </div>-->
-            
+                
+                    <canvas id="grafico"></canvas>
+
+                
+
+            </div>
+
+
+
+
+
         </div>
     </div>
 
@@ -106,9 +127,6 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.2/dist/umd/popper.min.js"
         integrity="sha384-q9CRHqZndzlxGLOj+xrdLDJa9ittGte1NksRmgJKeCV9DrM7Kz868XYqsKWPpAmn"
-        crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
@@ -120,10 +138,11 @@
 
 <script>
     $("#bodyLoginResultados").css("display", "none");
+    $("#grafico").css("display", "none");
 
     function guardarPreferencias() {
 
-        console.log("He entrado");
+
         // Aquí puedes agregar lógica adicional antes de llamar a las funciones de guardado
         if (typeof guardadoLugares === 'function') {
             guardadoLugares();
@@ -137,11 +156,15 @@
             console.error("La función de guardadoMeteo no está definida.");
         }
 
-        contruccionCards();
+        construccionCards();
 
-        $("#DatosMeteo").css("display", "none");
+        construirCalendario();
 
         
+
+        $("#DatosMeteo").css("display", "none");
+        
+
 
         $("#bodyLoginResultados").css("display", "block");
     }

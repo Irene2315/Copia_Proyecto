@@ -19,8 +19,7 @@ services:
       - ./Frontend/Recursos:/usr/local/apache2/htdocs/recursos
     ports:
       - "8080:80"
-    depends_on:
-      - mysql
+    
 
   mysql:
     image: mysql:latest
