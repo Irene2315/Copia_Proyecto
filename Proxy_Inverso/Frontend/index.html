@@ -16,8 +16,8 @@
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
     <script src="/recursos/i18n/jquery.ui.datepicker-es.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
-    
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.min.js"></script>
+
 
 
     <link rel="stylesheet" type="text/css" href="/recursos/estilos.css">
@@ -40,6 +40,8 @@
             $('[title]').tooltip();
         });
     </script>
+
+    
 
 
 </head>
@@ -102,17 +104,31 @@
             </div>
 
             <div id="resultadoLugarConcreto">
-                <h2 class="subtitulos">ANALIZAR UN LUGAR CONCRETO</h2>
+                <h2 class="subtitulos" id="lugarConcreto">MEDIR LA TEMPERATURA Y HUMEDAD GRÁFICO</h2>
+                <div id="selectorLugar"></div>
                 <div id="calendario">
                     <label for="desde">Desde</label>
-                    <input type="text" id="desde" name="desde">
+                    <input type="text" id="desde" name="desde" >
                     <label for="hasta">Hasta</label>
                     <input type="text" id="hasta" name="hasta">
                 </div>
-                
-                    <canvas id="grafico"></canvas>
+
+                <button id="construirGrafico" onclick="construirGrafico()" class="ui-button ui-widget ui-corner-all" 
+                type="submit" value="envioGrafico" >envioGrafico</button>
+
+                <div id="casoCamposVacios">
+                    <div class="alert alert-danger" role="alert">
+                        No has llenado todos los campos!
+                      </div>
+                </div>
 
                 
+                        <canvas id="grafico"></canvas>
+                    
+
+                
+
+
 
             </div>
 
@@ -139,6 +155,7 @@
 <script>
     $("#bodyLoginResultados").css("display", "none");
     $("#grafico").css("display", "none");
+   
 
     function guardarPreferencias() {
 
@@ -157,13 +174,17 @@
         }
 
         construccionCards();
-
+        
+        construirSelector();
+        
         construirCalendario();
 
         
 
+
+
         $("#DatosMeteo").css("display", "none");
-        
+
 
 
         $("#bodyLoginResultados").css("display", "block");

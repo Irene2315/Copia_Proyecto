@@ -51,6 +51,7 @@ h1 {
 }
 
 .subtitulos {
+  clear: both;
   display: inline-block;
   margin-top: 1%;
   color: black;
@@ -60,6 +61,7 @@ h1 {
   font-family: Suez_One;
 
   border-radius: 10px;
+  margin-bottom: 10px;
 
 }
 
@@ -259,9 +261,7 @@ h3 {
   font-weight: 700;
 }
 
-#selecionLugar{
- margin-left: 10%; 
-}
+
 
 .caraFrontal,
 .caraFrontal::before {
@@ -310,6 +310,24 @@ h3 {
   font-size: 30px; 
   max-width: 300px; 
 }
+#lugarConcreto{
+  margin: 0px;
+
+}
+#selectorLugar,#calendario{
+  margin-bottom: 100px;
+}
+#selectorLugar{
+  
+  float: left;
+
+  margin-top: 5%;
+  margin-left: 10%;
+}
+#selectorLugar select{
+ 
+ background-color: black;
+}
 
 #calendario input{
   
@@ -318,24 +336,37 @@ h3 {
 }
 
 #calendario{
+  
   margin-top: 1%;
   margin-bottom: 100px;
+  margin-left: 10%;
 }
 #calendario label{
-  margin-left: 5%;
+  
+  margin-left: 1%;
+  
+}
+
+#casoCamposVacios{
+  margin-top: 5%;
+  margin-left: 50%;
+  width: 20%;
+  height: 100px;
+  display: none;
 }
 
 #grafico{
+  margin-top: 5%;
   background-color: white;
   width:50%;
-  height: 20%;
-  max-width:600px;
-  margin-left: 35%;
+  height: 100px;
+  max-width:1000px;
+  margin-left: 10%;
 }
 
 
 footer {
-  margin-top: 1%;
+  margin-top: 10%;
   background: black;
   width: 100%;
   height: 200px;

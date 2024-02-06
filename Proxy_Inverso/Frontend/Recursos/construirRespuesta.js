@@ -1,5 +1,6 @@
 
 function gestionDeRespuesta() {
+
     var cadenaLugares = localStorage.getItem('lugaresSeleccion');
     var cadenaItemsMeteo = localStorage.getItem('guardadoItems');
 
@@ -233,7 +234,7 @@ function construccionCards() {
         })
         .catch(err => console.error(err));
 
-        console.log(consultas);
+    console.log(consultas);
 
     Intervalo();
 
@@ -269,19 +270,18 @@ function construccionCards() {
                     construirCards += `<div class="mediciones-container">`;
                     arrayItems.forEach(itemActivo => {
                         if (itemActivo == "valorTemp") {
-                            construirCards += `<h5 class="card-texto colorLetra">${itemsLugarSelectAhora.valorTemp}ºC</h5>`;
+                            construirCards += `<h5 class="card-texto colorLetra">${itemsLugarSelectAhora.valorTemp.toFixed(2)}ºC</h5>`;
                             construirCards += `<img class="imgLat" src="/recursos/Fotos/Prevision/Temperatura.svg">`;
                         }
                         if (itemActivo == "valorHumedad") {
-                            construirCards += `<h5 class="card-texto colorLetra">${itemsLugarSelectAhora.valorHumedad}%</h5>`;
+                            construirCards += `<h5 class="card-texto colorLetra">${itemsLugarSelectAhora.valorHumedad.toFixed(2)}%</h5>`;
                             construirCards += `<img class="imgLat" src="/recursos/Fotos/Prevision/Humedad.svg">`;
                         }
                         if (itemActivo == "valorViento") {
-                            construirCards += `<h5 class="card-texto colorLetra">${itemsLugarSelectAhora.valorViento}%</h5>`;
+                            construirCards += `<h5 class="card-texto colorLetra">${itemsLugarSelectAhora.valorViento.toFixed(2)}%</h5>`;
                             construirCards += `<img class="imgLat" src="/recursos/Fotos/Prevision/Viento.svg">`;
                         }
                     });
-            
                     construirCards += `</div>`;
                     construirCards += `</div></div></div></div>`;
                 });
@@ -296,6 +296,66 @@ function construccionCards() {
     }
 
 }
+
+let lugarSeleccionado = '';
+
+function construirSelector() {
+    var cadenaLugares = localStorage.getItem('lugaresSeleccion');
+
+    var arrayLugares = JSON.parse(cadenaLugares);
+
+    console.log(arrayLugares);
+
+    const options = {
+        method: 'GET',
+        headers: {
+            Authorization: 'Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJtZXQwMS5hcGlrZXkiLCJpc3MiOiJJRVMgUExBSUFVTkRJIEJISSBJUlVOIiwiZXhwIjoyMjM4MTMxMDAyLCJ2ZXJzaW9uIjoiMS4wLjAiLCJpYXQiOjE2Mzk3NDc5MDcsImVtYWlsIjoiaWtjZXhAcGxhaWF1bmRpLm5ldCJ9.NEd10ft7DTb8HCohv5WId_rRKtgQj-Pc5dLNdCsmSTgypZxyGSkNJIuPulVAOvcZrfs9sXMjus-06iDa6kZlOnMGQeY0LsajlWakvGGXmDN3FKSfJT-9BCDtMyh89P34Jt3uneIt7H0we82G4_URRfUwIGQg83FCT_zO6Pu2joqBRURMC80Hs_x4voWpmGCwg6LPcb4sO0bGNqJq36zp1WB0LHPjBQ6pd3_mjiXsE6h892841vwcdyElpX2gCKV9JEH6Xm1LBVbcTakWUO_jGjAGhO4SdBOXuqNcmKDOJbsURVMlNc-_2kYvYlxPa9xj9B9PrXwNq7tNDlDq6ooKYA'
+        }
+    };
+
+    // Lugares seleccionados por el usuario
+    let lugaresSelect = [];
+
+    fetch('http://localhost:8083/api/lugaresSeleccionados/' + cadenaLugares, options)
+        .then(response => response.json())
+        .then(data => {
+            console.log("Respuesta_LugaresSeleccion:");
+            console.log(data);
+
+            data.forEach(lugarDataSelect => {
+                console.log(lugarDataSelect)
+                lugaresSelect.push({
+                    id: lugarDataSelect.id,
+                    nombre: lugarDataSelect.nombre,
+                    latitud: lugarDataSelect.latitud,
+                    longitud: lugarDataSelect.longitud,
+                    idProvincia: lugarDataSelect.idProvincia
+                });
+            });
+
+            let contenedorSelect = document.getElementById("selectorLugar");
+            let construirSelect = '';
+
+            construirSelect += `<label for="selectorLugar">Opciones lugares</label>`
+            construirSelect += `<select name="lugar" id="lugares">`
+            construirSelect += `<option disabled selected>Selecciona un lugar</option>`
+            lugaresSelect.forEach(lugar => {
+                construirSelect += `<option value="${lugar.id}">${lugar.nombre}</option>`
+            });
+            construirSelect += `</select>`
+
+            contenedorSelect.innerHTML = construirSelect;
+
+            // Manejar el cambio en la selección directamente sin promesas
+            $("#lugares").on("change", function () {
+                lugarSeleccionado = $(this).val();
+            });
+        })
+        .catch(error => console.error(error));
+}
+
+
+
 
 function construirCalendario() {
     var dateFormat = "dd/mm/yy",
@@ -338,58 +398,163 @@ function construirCalendario() {
         return date;
     }
 
-    return new Promise((resolve) => {
-
-        var camposLlenos = setInterval(() => {
-            var desdeContenido = $("#desde").val();
-            var hastaContenido = $("#hasta").val();
-
-            if (desdeContenido.trim() !== '' && hastaContenido.trim() !== '') {
-                console.log("campos_llenos");
-                clearInterval(camposLlenos);
-                resolve();
-            }
-        }, 100);
-    });
 
 }
 
-async function construirGrafico() {
-    await construirCalendario();
+
+function construirGrafico() {
 
 
     var fechaDesde = $("#desde").val();
     var fechaHasta = $("#hasta").val();
 
-    console.log("Fecha Desde:", fechaDesde);
-    console.log("Fecha Hasta:", fechaHasta);
-
-    const xValues = [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000];
-
-    new Chart("grafico", {
-        type: "line",
-        data: {
-            labels: xValues,
-            datasets: [{
-                data: [860, 1140, 1060, 1060, 1070, 1110, 1330, 2210, 7830, 2478],
-                borderColor: "red",
-                fill: false
-            }, {
-                data: [1600, 1700, 1700, 1900, 2000, 2700, 4000, 5000, 6000, 7000],
-                borderColor: "green",
-                fill: false
-            }, {
-                data: [300, 700, 2000, 5000, 6000, 4000, 2000, 1000, 200, 100],
-                borderColor: "blue",
-                fill: false
-            }]
-        },
-        options: {
-
-            legend: { display: false }
+    function cambiarFormatoFecha(fecha) {
+        var partes = fecha.split('/');
+        if (partes.length === 3) {
+            return partes[1] + '/' + partes[0] + '/' + partes[2];
         }
-    });
+        return fecha;
+    }
 
-    $("#grafico").css("display", "block");
+    var fechaDesdeDate = new Date(cambiarFormatoFecha(fechaDesde));
+    var fechaHastaDate = new Date(cambiarFormatoFecha(fechaHasta));
+
+    console.log(fechaDesdeDate);
+    console.log(fechaHastaDate);
+
+
+    function formatearNumeroConCero(numero) {
+        if (numero < 10) {
+            return '0' + numero;
+        } else {
+            return numero;
+        }
+    }
+
+    var formatoPeticionDesde = (fechaDesdeDate.getFullYear() + "-" + formatearNumeroConCero(fechaDesdeDate.getMonth() + 1) + "-" + formatearNumeroConCero(fechaDesdeDate.getDate()) + " " + "00:00:00");
+    var formatoPeticionHasta = (fechaHastaDate.getFullYear() + "-" + formatearNumeroConCero(fechaHastaDate.getMonth() + 1) + "-" + formatearNumeroConCero(fechaHastaDate.getDate()) + " " + "00:00:00");
+
+
+    console.log(formatoPeticionDesde);
+    console.log(formatoPeticionHasta);
+
+    if (fechaDesde.trim() == '' || fechaHasta.trim() == '' || lugarSeleccionado.trim() == '') {
+
+        $("#casoCamposVacios").css("display", "block");
+
+    }
+
+    else {
+
+        $("#casoCamposVacios").css("display", "none");
+
+        console.log("Fecha Desde:", fechaDesde);
+        console.log("Fecha Hasta:", fechaHasta);
+        console.log('Lugar seleccionado:', lugarSeleccionado);
+
+        const options = {
+            method: 'GET',
+            headers: {
+                Authorization: 'Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJtZXQwMS5hcGlrZXkiLCJpc3MiOiJJRVMgUExBSUFVTkRJIEJISSBJUlVOIiwiZXhwIjoyMjM4MTMxMDAyLCJ2ZXJzaW9uIjoiMS4wLjAiLCJpYXQiOjE2Mzk3NDc5MDcsImVtYWlsIjoiaWtjZXhAcGxhaWF1bmRpLm5ldCJ9.NEd10ft7DTb8HCohv5WId_rRKtgQj-Pc5dLNdCsmSTgypZxyGSkNJIuPulVAOvcZrfs9sXMjus-06iDa6kZlOnMGQeY0LsajlWakvGGXmDN3FKSfJT-9BCDtMyh89P34Jt3uneIt7H0we82G4_URRfUwIGQg83FCT_zO6Pu2joqBRURMC80Hs_x4voWpmGCwg6LPcb4sO0bGNqJq36zp1WB0LHPjBQ6pd3_mjiXsE6h892841vwcdyElpX2gCKV9JEH6Xm1LBVbcTakWUO_jGjAGhO4SdBOXuqNcmKDOJbsURVMlNc-_2kYvYlxPa9xj9B9PrXwNq7tNDlDq6ooKYA'
+            }
+        };
+
+
+        var fechas = [];
+        var temperaturas = [];
+        var humedades = [];
+        fetch(`http://localhost:8083/api/itemsLugar/${lugarSeleccionado}/${formatoPeticionDesde}/${formatoPeticionHasta}`, options)
+            .then(response => response.json())
+            .then(data => {
+                console.log("Respuesta_ItemsLugar:");
+                //console.log(data);
+
+
+
+                data.forEach(itemDataSelect => {
+                    console.log(itemDataSelect);
+                    var fecha = new Date(itemDataSelect.fecha);
+                    //var formatoFecha = (formatearNumeroConCero(fecha.getDate()) + "/"+ formatearNumeroConCero(fecha.getMonth() + 1) + "/" +fecha.getFullYear() );
+                    var mediaTemp = parseFloat(itemDataSelect.mediaTemp);
+                    var mediaHumedad = parseFloat(itemDataSelect.mediaHumedad);
+
+                    fechas.push(formatoFecha);
+                    temperaturas.push(mediaTemp);
+                    humedades.push(mediaHumedad);
+                });
+                
+            })
+            .catch(err => console.error(err));
+
+
+
+        console.log(fechas);
+        console.log(temperaturas);
+        console.log(humedades);
+
+        // setup 
+        const data = {
+            labels: fechas,
+            datasets: [{
+                label: 'Temperatura',
+                data: temperaturas,
+                backgroundColor: 'rgba(255, 26, 104, 0.2)',
+                borderColor: 'rgba(255, 26, 104, 1)',
+                tension: 0.4,
+                yAxisID: 'temperatura'
+            }, {
+                label: 'Humedad',
+                data: humedades,
+                backgroundColor: 'rgba(0, 26, 104, 0.2)',
+                borderColor: 'rgba(0, 26, 104, 1)',
+                tension: 0.4,
+                yAxisID: 'humedad'
+            }]
+        };
+
+        // config 
+        const config = {
+            type: 'line',
+            data,
+            options: {
+                scales: {
+                    temperatura: {
+                        beginAtZero: true,
+                        type: 'linear',
+                        position: 'left',
+                        ticks: {
+                            callback: function (value, index, values) {
+                                return `${value} ºC`
+                            }
+                        }
+                    },
+                    humedad: {
+                        beginAtZero: true,
+                        type: 'linear',
+                        position: 'right',
+                        grid: {
+                            drawOnChartArea: false
+                        },
+                        ticks: {
+                            callback: function (value, index, values) {
+                                return `${value} %`
+                            }
+                        }
+                    }
+                }
+            }
+        };
+
+        $("#grafico").css("display", "block");
+        
+        const grafico = new Chart(
+            document.getElementById('grafico'),
+            config
+        );
+
+
+       
+
+    }
 
 }
