@@ -259,9 +259,16 @@ input {
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 
 }
+#log_2 {
+  
+  margin-right: 1%;
+}
 
 #logout {
-  border: 3px solid white;
+  
+  border: 2px solid white;
+  border-radius: 10%;
+  
 }
 
 
