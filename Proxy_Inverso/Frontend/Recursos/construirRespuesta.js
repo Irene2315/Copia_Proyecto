@@ -401,8 +401,12 @@ function construirCalendario() {
 
 }
 
+var fechas = [];
+var temperaturas = [];
+var humedades = [];
 
-function construirGrafico() {
+function datosGrafico() {
+
 
 
     var fechaDesde = $("#desde").val();
@@ -432,7 +436,7 @@ function construirGrafico() {
     }
 
     var formatoPeticionDesde = (fechaDesdeDate.getFullYear() + "-" + formatearNumeroConCero(fechaDesdeDate.getMonth() + 1) + "-" + formatearNumeroConCero(fechaDesdeDate.getDate()) + " " + "00:00:00");
-    var formatoPeticionHasta = (fechaHastaDate.getFullYear() + "-" + formatearNumeroConCero(fechaHastaDate.getMonth() + 1) + "-" + formatearNumeroConCero(fechaHastaDate.getDate()) + " " + "00:00:00");
+    var formatoPeticionHasta = (fechaHastaDate.getFullYear() + "-" + formatearNumeroConCero(fechaHastaDate.getMonth() + 1) + "-" + formatearNumeroConCero(fechaHastaDate.getDate()) + " " + "23:59:59");
 
 
     console.log(formatoPeticionDesde);
@@ -460,9 +464,8 @@ function construirGrafico() {
         };
 
 
-        var fechas = [];
-        var temperaturas = [];
-        var humedades = [];
+
+
         fetch(`http://localhost:8083/api/itemsLugar/${lugarSeleccionado}/${formatoPeticionDesde}/${formatoPeticionHasta}`, options)
             .then(response => response.json())
             .then(data => {
@@ -472,71 +475,86 @@ function construirGrafico() {
 
 
                 data.forEach(itemDataSelect => {
-                    console.log(itemDataSelect);
+                    //console.log(itemDataSelect);
                     var fecha = new Date(itemDataSelect.fecha);
-                    //var formatoFecha = (formatearNumeroConCero(fecha.getDate()) + "/"+ formatearNumeroConCero(fecha.getMonth() + 1) + "/" +fecha.getFullYear() );
+                    var formatoFecha = (formatearNumeroConCero(fecha.getDate()) + "/" + formatearNumeroConCero(fecha.getMonth() + 1) + "/" + fecha.getFullYear());
                     var mediaTemp = parseFloat(itemDataSelect.mediaTemp);
                     var mediaHumedad = parseFloat(itemDataSelect.mediaHumedad);
+
 
                     fechas.push(formatoFecha);
                     temperaturas.push(mediaTemp);
                     humedades.push(mediaHumedad);
                 });
-                
+
+
+                construirGrafico();
+
             })
             .catch(err => console.error(err));
 
 
+    }
 
-        console.log(fechas);
-        console.log(temperaturas);
-        console.log(humedades);
+}
 
-        // setup 
-        const data = {
-            labels: fechas,
-            datasets: [{
-                label: 'Temperatura',
-                data: temperaturas,
-                backgroundColor: 'rgba(255, 26, 104, 0.2)',
-                borderColor: 'rgba(255, 26, 104, 1)',
-                tension: 0.4,
-                yAxisID: 'temperatura'
-            }, {
-                label: 'Humedad',
-                data: humedades,
-                backgroundColor: 'rgba(0, 26, 104, 0.2)',
-                borderColor: 'rgba(0, 26, 104, 1)',
-                tension: 0.4,
-                yAxisID: 'humedad'
-            }]
-        };
+let grafico = null;
 
-        // config 
+function construirGrafico() {
+    
+    if (grafico) {
+        
+        grafico.data.labels = fechas;
+        grafico.data.datasets[0].data = temperaturas;
+        grafico.data.datasets[1].data = humedades;
+        grafico.update(); 
+    } else {
+       
+        const canvas = document.createElement("canvas");
+        canvas.id = "grafico";
+        document.getElementById("ContenedorGrafico").appendChild(canvas);
+
         const config = {
             type: 'line',
-            data,
+            data: {
+                labels: fechas,
+                datasets: [{
+                    label: 'Temperatura',
+                    data: temperaturas,
+                    backgroundColor: 'rgba(255, 26, 104, 0.2)',
+                    borderColor: 'rgba(255, 26, 104, 1)',
+                    tension: 0.4,
+                    yAxisID: 'temperatura'
+                }, {
+                    label: 'Humedad',
+                    data: humedades,
+                    backgroundColor: 'rgba(0, 26, 104, 0.2)',
+                    borderColor: 'rgba(0, 26, 104, 1)',
+                    tension: 0.4,
+                    yAxisID: 'humedad'
+                }]
+            },
             options: {
                 scales: {
                     temperatura: {
-                        beginAtZero: true,
+                        beginAtZero: false,
                         type: 'linear',
                         position: 'left',
                         ticks: {
-                            callback: function (value, index, values) {
+                            callback: function (value) {
                                 return `${value} ºC`
                             }
                         }
                     },
                     humedad: {
-                        beginAtZero: true,
+                        beginAtZero: false,
                         type: 'linear',
                         position: 'right',
                         grid: {
                             drawOnChartArea: false
                         },
                         ticks: {
-                            callback: function (value, index, values) {
+                            callback: function (value) {
                                 return `${value} %`
                             }
                         }
@@ -545,16 +563,11 @@ function construirGrafico() {
             }
         };
 
-        $("#grafico").css("display", "block");
-        
-        const grafico = new Chart(
-            document.getElementById('grafico'),
-            config
-        );
-
-
-       
-
+        // Crear el nuevo gráfico
+        grafico = new Chart(canvas, config);
     }
 
+    $("#grafico").css("display", "block");
 }
+
+
